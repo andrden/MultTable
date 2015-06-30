@@ -6,9 +6,48 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.multtable.MainActivity$PlaceholderFragment">
 
-    <TextView android:id="@+id/section_label"
-        android:text="abcd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+        <ProgressBar android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:id="@+id/progressBar"
+         />
+        <ProgressBar android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:id="@+id/progressOk"
+            />
+
+        <TextView android:id="@+id/numberTxt"
+            android:text=""
+            android:textSize="10mm"
+            android:background="#ffe0e0"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/b1" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/b2" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/b3" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/b4" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/b5" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/b6" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/b7" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/b8" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/b9" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/b0" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Button android:id="@+id/bstop" android:text="Stop" android:onClick="stopClicked" android:enabled="false"
+                android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </RelativeLayout>

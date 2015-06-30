@@ -10,13 +10,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -114,11 +112,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    public void stopClicked(View view) {
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        MainFragment mainFragment = new MainFragment();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -126,6 +130,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public Fragment getItem(int position) {
+            if( position==0 ){
+                return mainFragment;
+            }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             return PlaceholderFragment.newInstance(position + 1);
@@ -151,6 +158,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
     }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -182,13 +190,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            if( sectionNumber==2 ) { // second
+            if( sectionNumber!=1 ) { // not first
                 View rootView = inflater.inflate(R.layout.fragment_logs, container, false);
                 return rootView;
-            }else {
-                View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-                return rootView;
             }
+            throw new IllegalArgumentException();
         }
     }
 
