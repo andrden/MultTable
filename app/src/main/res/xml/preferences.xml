@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+    android:defaultValue="8"
+    android:dialogTitle="Max Val for mult. table"
+    android:inputType="number"
+    android:key="pref_max"
+    android:summary="Max Value"
+    android:title="Max Val" />
+</PreferenceScreen>
