@@ -1,6 +1,7 @@
 package com.example.multtable;
 
 import android.content.SharedPreferences;
+import android.speech.tts.TextToSpeech;
 
 import java.security.SecureRandom;
 import java.util.HashSet;
@@ -12,6 +13,8 @@ import java.util.Set;
  */
 class Model {
     SharedPreferences sharedPref;
+    TextToSpeech tts;
+
     Random rnd = new SecureRandom();
     long tstart = System.currentTimeMillis();
     long tend = tstart;
@@ -23,13 +26,15 @@ class Model {
     Set<String> shown = new HashSet<>();
     int taskNo = 0;
     int okNo = 0;
+    boolean hadError;
 
     int getMax() {
-        return Integer.parseInt(sharedPref.getString("pref_max", "8"));
+        return Integer.parseInt(sharedPref.getString("pref_max", "11"));
     }
 
-    public Model(SharedPreferences sharedPref) {
+    public Model(SharedPreferences sharedPref, TextToSpeech tts) {
         this.sharedPref = sharedPref;
+        this.tts = tts;
         nextTask();
     }
 
@@ -38,6 +43,7 @@ class Model {
             stop = true;
         }else {
             taskNo++;
+            hadError=false;
             for (int i = 0; ; i++) {
                 int v1 = 2 + rnd.nextInt(getMax() - 1);
                 int v2 = 2 + rnd.nextInt(getMax() - 1);
@@ -61,11 +67,17 @@ class Model {
         if (res.charAt(numberTxt.length()) == c) {
             numberTxt += c;
             if (numberTxt.equals(res)) {
-                okNo++;
+                if( ! hadError ) {
+                    okNo++;
+                }
                 nextTask();
             }
         } else {
-            nextTask();
+//            String[] ers = {"oops","no","nope","nay","no way","ahem","blah","boo","jeez","my gosh","tut","what?"};
+            String[] ers = {"oops","no","nope","nay","no way","ahem","jeez","my gosh"};
+            tts.speak(ers[rnd.nextInt(ers.length)], TextToSpeech.QUEUE_FLUSH, null);
+            hadError=true;
+            //nextTask();
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.multtable;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 /**
  * Created by denny on 6/30/15.
@@ -27,6 +30,8 @@ public class MainFragment extends Fragment {
 
 
     Model model;
+    Sounds sounds;
+    TextToSpeech tts;
 
     void updateView(){
         if( model.stop ){
@@ -48,9 +53,17 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        sounds = new Sounds(getActivity(), new int[]{R.raw.rooster});
+        tts = new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+            }
+        });
+        tts.setLanguage(Locale.US);
+
         progressBar = (ProgressBar)rootView.findViewById(R.id.progressBar);
         if( model==null ){
-            model = new Model(PreferenceManager.getDefaultSharedPreferences(getActivity()));
+            model = new Model(PreferenceManager.getDefaultSharedPreferences(getActivity()), tts);
             progressBar.incrementProgressBy(1);
         }
 
@@ -72,6 +85,9 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     model.nextLetter(b.getText().charAt(0));
+                    if( model.stop ){
+                       sounds.sound(R.raw.rooster);
+                    }
                     updateView();
                 }
             });
